@@ -9,10 +9,12 @@
   margin-bottom: 1rem;
 }
 
+/* Extra space above photo so the hat can be moved up for more precise placement */
 .photo-container {
   position: relative;
   display: inline-block;
   max-width: 100%;
+  padding-top: 18%;
 }
 
 .photo {

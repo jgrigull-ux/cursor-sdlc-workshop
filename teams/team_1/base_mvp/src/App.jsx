@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TOPS, BOTTOMS, SHOES } from "./data/wardrobe";
+import AboutUs from "./components/AboutUs";
 import "./App.css";
 
 // Helper: pick a random item from an array
@@ -10,6 +11,8 @@ function pickRandom(array) {
 function App() {
   // The current outfit — one top, one bottom, one pair of shoes
   const [outfit, setOutfit] = useState(null);
+  // Toggle between main app and About Us page
+  const [showAbout, setShowAbout] = useState(false);
 
   // Generate a random outfit by picking one from each category
   const generateOutfit = () => {
@@ -19,6 +22,11 @@ function App() {
       shoes: pickRandom(SHOES),
     });
   };
+
+  // Show About Us page
+  if (showAbout) {
+    return <AboutUs onBack={() => setShowAbout(false)} />;
+  }
 
   return (
     <div className="app">
@@ -63,6 +71,14 @@ function App() {
       </button>
 
       {/* --- Feature slots will plug in here (history, saved outfits, etc.) --- */}
+
+      {/* Footer with About Us Link */}
+      <footer className="app-footer">
+        <button className="about-link" onClick={() => setShowAbout(true)}>
+          About Us
+        </button>
+        <p className="footer-tagline">AI-Powered Style for Every Occasion</p>
+      </footer>
     </div>
   );
 }

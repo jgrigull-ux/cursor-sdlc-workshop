@@ -1,0 +1,53 @@
+.hat-controls {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.hat-controls-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.hat-controls-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.slider-group {
+  margin-bottom: 1rem;
+}
+
+.slider-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.slider-group label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.slider-group label span:first-child {
+  min-width: 140px;
+}
+
+.slider-group input[type="range"] {
+  flex: 1;
+  min-width: 120px;
+  max-width: 200px;
+  accent-color: #667eea;
+}
+
+.slider-group .value {
+  min-width: 3ch;
+  font-weight: 600;
+  color: #667eea;
+}

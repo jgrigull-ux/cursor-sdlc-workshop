@@ -205,14 +205,20 @@
   color: white;
 }
 
-.stylist-icon {
-  font-size: 1.75rem;
-  margin-bottom: 0.4rem;
-  transition: transform 0.2s ease;
+.stylist-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
 }
 
-.stylist-item:hover .stylist-icon {
-  transform: scale(1.15);
+.stylist-item:hover .stylist-photo {
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .stylist-name {

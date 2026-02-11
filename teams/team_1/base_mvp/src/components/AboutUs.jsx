@@ -91,28 +91,52 @@ function AboutUs({ onBack }) {
       <div className="about-card">
         <h2 className="about-section-title">Meet Our Pro Stylists</h2>
         <div className="stylists-list">
+          <a href="https://www.linkedin.com/in/faisalshaikh96/" target="_blank" rel="noopener noreferrer" className="stylist-item">
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D5603AQE-QELUckF8jQ/profile-displayphoto-crop_800_800/B56ZsBN.sWHYAI-/0/1765252001314?e=1772668800&v=beta&t=M5IAzvGNuPl91LSdz4LWEyVMws1FWK8_jeFMc4TvAek" 
+              alt="Faisal Shaikh" 
+              className="stylist-photo"
+            />
+            <span className="stylist-name">Faisal Shaikh</span>
+          </a>
           <a href="https://www.linkedin.com/in/zoe-barnswell-00024b121/" target="_blank" rel="noopener noreferrer" className="stylist-item">
-            <span className="stylist-icon">👩‍🎨</span>
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D4E03AQHw_Gpuk-Salg/profile-displayphoto-crop_800_800/B4EZoN3vIUHMAI-/0/1761169306594?e=1772668800&v=beta&t=cAd33doetBKdaUSXl5b-ZShwsxE_BF4e1ClaDdLiO9k" 
+              alt="Zoe Barnswell" 
+              className="stylist-photo"
+            />
             <span className="stylist-name">Zoe Barnswell</span>
           </a>
           <a href="https://www.linkedin.com/in/will-ziesing/" target="_blank" rel="noopener noreferrer" className="stylist-item">
-            <span className="stylist-icon">👨‍🎨</span>
+            <img 
+              src="https://media.licdn.com/dms/image/v2/C5603AQFgRpid9SbVbQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1608167211300?e=1772668800&v=beta&t=BxF74vsStFJxo9p3qFSyrsnstw9JbZb1mmUS3-qKzZg" 
+              alt="Will Ziesing" 
+              className="stylist-photo"
+            />
             <span className="stylist-name">Will Ziesing</span>
           </a>
-          <a href="https://www.linkedin.com/in/faisalshaikh96/" target="_blank" rel="noopener noreferrer" className="stylist-item">
-            <span className="stylist-icon">👨‍💼</span>
-            <span className="stylist-name">Faisal Shaikh</span>
-          </a>
           <a href="https://www.linkedin.com/in/raznar/" target="_blank" rel="noopener noreferrer" className="stylist-item">
-            <span className="stylist-icon">👨‍🎨</span>
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D5603AQHVsy87C2OjsQ/profile-displayphoto-shrink_800_800/B56ZVeCwPEGQAc-/0/1741039536689?e=1772668800&v=beta&t=cEpPc7PaQL-DS3lhHiXyVJx_6rRSW2P9EVCoLU0MbtU" 
+              alt="Ryan Aznar" 
+              className="stylist-photo"
+            />
             <span className="stylist-name">Ryan Aznar</span>
           </a>
           <a href="https://www.linkedin.com/in/noahzender/" target="_blank" rel="noopener noreferrer" className="stylist-item">
-            <span className="stylist-icon">👨‍💼</span>
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D5603AQE0GHyG70c-ow/profile-displayphoto-crop_800_800/B56ZxNVk9mKAAI-/0/1770824028483?e=1772668800&v=beta&t=Z5aWbMtF-uE2I8tvNoVJfwcFpr59BGpsRO4i4GlCTvk" 
+              alt="Noah Zender" 
+              className="stylist-photo"
+            />
             <span className="stylist-name">Noah Zender</span>
           </a>
           <a href="https://www.linkedin.com/in/xuaudrey/" target="_blank" rel="noopener noreferrer" className="stylist-item">
-            <span className="stylist-icon">👩‍💼</span>
+            <img 
+              src="https://media.licdn.com/dms/image/v2/D5603AQG0378YPTiZqQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1682514813257?e=1772668800&v=beta&t=IVmpKPP-TaaSZF7IJ6ze7SNDpsLOQlvBAm1VCy5DQvw" 
+              alt="Audrey Leung" 
+              className="stylist-photo"
+            />
             <span className="stylist-name">Audrey Leung</span>
           </a>
         </div>

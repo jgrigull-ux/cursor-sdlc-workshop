@@ -2,7 +2,7 @@ const Slide06Section1Intro = () => (
   <>
     <div className="section-header">
       <span className="section-badge section1">Section 1</span>
-      <span className="phase-badge">Greenfield Project • 45 min • Teams of 5</span>
+      <span className="phase-badge">Greenfield Project • 25 min • Teams of 5</span>
     </div>
     <h2>Build Something From Scratch</h2>
     <div className="intro-callout cyan">
@@ -62,20 +62,6 @@ const Slide06Section1Intro = () => (
               </div>
             </div>
             <div className="project-idea">
-              <span className="project-icon">🖍️</span>
-              <div>
-                <strong>Page Highlighter</strong>
-                <span>highlight text, colors, notes, save, export</span>
-              </div>
-            </div>
-            <div className="project-idea">
-              <span className="project-icon">😀</span>
-              <div>
-                <strong>Emoji Picker</strong>
-                <span>emoji grid, search, recents, favorites, copy</span>
-              </div>
-            </div>
-            <div className="project-idea">
               <span className="project-icon">🔖</span>
               <div>
                 <strong>Save for Later</strong>
@@ -103,17 +89,44 @@ const Slide06Section1Intro = () => (
               </div>
             </div>
             <div className="project-idea">
-              <span className="project-icon">💵</span>
+              <span className="project-icon">📈</span>
               <div>
-                <strong>Tip Calculator</strong>
-                <span>bill input, tip slider, split, round up, history</span>
+                <strong>Odds / Line Converter</strong>
+                <span>American ↔ decimal, implied probability, breakeven %</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="project-category">
+          <div className="project-category-label">Games</div>
+          <div className="project-ideas">
+            <div className="project-idea">
+              <span className="project-icon">🟩</span>
+              <div>
+                <strong>Wordle Clone</strong>
+                <span>daily puzzle, keyboard, share, stats/streaks</span>
               </div>
             </div>
             <div className="project-idea">
-              <span className="project-icon">❓</span>
+              <span className="project-icon">🐦</span>
               <div>
-                <strong>Quiz Game</strong>
-                <span>questions, answers, score, timer, results</span>
+                <strong>Flappy Bird Clone</strong>
+                <span>physics, pipes, difficulty ramp, high scores, skins</span>
+              </div>
+            </div>
+            <div className="project-idea">
+              <span className="project-icon">🐍</span>
+              <div>
+                <strong>Snake</strong>
+                <span>movement, food, speed ramp, modes, high scores</span>
+              </div>
+            </div>
+            <div className="project-idea">
+              <span className="project-icon">🏈</span>
+              <div>
+                <strong>Super Bowl Squares</strong>
+                <span>10×10 board, random digits, payouts, lock at kickoff</span>
               </div>
             </div>
           </div>

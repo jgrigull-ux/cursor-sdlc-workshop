@@ -10,8 +10,8 @@ const Slide05PreWork = () => (
         <div className="check-header">
           <div className="check-box"></div>
           <div>
-            <strong>Download & Install Cursor</strong> — cursor.com (it's like
-            VS Code but smarter)
+            <strong>Download &amp; Install Cursor</strong> — should already be on
+            your machine
           </div>
         </div>
       </div>
@@ -19,19 +19,7 @@ const Slide05PreWork = () => (
         <div className="check-header">
           <div className="check-box"></div>
           <div>
-            <strong>Install Cursor CLI</strong> — lets you open Cursor from the
-            command line
-          </div>
-        </div>
-        <div className="code-block">
-          <code>Cmd+Shift+P → "Install 'cursor' command"</code>
-        </div>
-      </div>
-      <div className="check-item has-code">
-        <div className="check-header">
-          <div className="check-box"></div>
-          <div>
-            <strong>Open Terminal</strong> — your command line interface
+            <strong>Open Terminal</strong>
           </div>
         </div>
         <div className="code-block">
@@ -44,31 +32,49 @@ const Slide05PreWork = () => (
         <div className="check-header">
           <div className="check-box"></div>
           <div>
-            <strong>Install brew and git</strong> — brew installs tools, git
-            tracks your code history
+            <strong>Copy the setup script from GitHub</strong>
           </div>
         </div>
         <div className="code-block">
-          <code>cursor "Help me install brew and git on my Mac"</code>
+          <code>
+            cd ~/Desktop
+            <br />
+            curl -L -o setup-cursor-agent.sh{' '}
+            https://raw.githubusercontent.com/Rperry2174/cursor-sdlc-workshop/main/setup-cursor-agent.sh
+          </code>
         </div>
       </div>
       <div className="check-item has-code">
         <div className="check-header">
           <div className="check-box"></div>
           <div>
-            <strong>Verify installations</strong> — make sure everything worked
+            <strong>Run the setup script</strong> — installs everything
+            (Homebrew, Git, GitHub CLI, Node.js, Cursor CLI)
+          </div>
+        </div>
+        <div className="code-block">
+          <code>bash setup-cursor-agent.sh</code>
+        </div>
+      </div>
+      <div className="check-item has-code">
+        <div className="check-header">
+          <div className="check-box"></div>
+          <div>
+            <strong>Verify it worked</strong>
           </div>
         </div>
         <div className="code-block">
           <code>
-            brew --version
-            <br />
             git --version
             <br />
             cursor --version
           </code>
         </div>
       </div>
+    </div>
+    <div className="emphasis-box">
+      <strong>The script handles everything:</strong> Homebrew, Git, GitHub CLI,
+      Node.js, and the Cursor CLI — all in one command.
     </div>
   </>
 )

@@ -2,7 +2,7 @@ const Slide11Section2Intro = () => (
   <>
     <div className="section-header">
       <span className="section-badge section2">Section 2</span>
-      <span className="phase-badge">Legacy Codebase • 30 min • Teams of 5</span>
+      <span className="phase-badge">Legacy Codebase • 25 min • Teams of 5</span>
     </div>
     <h2>Work With Unfamiliar Code</h2>
     <div className="intro-callout orange">

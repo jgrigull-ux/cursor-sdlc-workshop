@@ -12,8 +12,8 @@ function HatControls({ hatPosition, onPositionChange, hatSize, onSizeChange }) {
           <input
             id="hat-top"
             type="range"
-            min="0"
-            max="25"
+            min="-15"
+            max="55"
             value={hatPosition.top}
             onChange={(e) =>
               onPositionChange((prev) => ({ ...prev, top: Number(e.target.value) }))
@@ -30,8 +30,8 @@ function HatControls({ hatPosition, onPositionChange, hatSize, onSizeChange }) {
           <input
             id="hat-left"
             type="range"
-            min="30"
-            max="70"
+            min="0"
+            max="100"
             value={hatPosition.left}
             onChange={(e) =>
               onPositionChange((prev) => ({ ...prev, left: Number(e.target.value) }))
@@ -48,8 +48,8 @@ function HatControls({ hatPosition, onPositionChange, hatSize, onSizeChange }) {
           <input
             id="hat-size"
             type="range"
-            min="15"
-            max="50"
+            min="5"
+            max="85"
             value={hatSize}
             onChange={(e) => onSizeChange(Number(e.target.value))}
             aria-label="Hat size"

@@ -1,0 +1,102 @@
+.camera-capture {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.camera-capture-inner {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.camera-preview-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  background: #000;
+}
+
+.camera-preview {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.camera-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+}
+
+.camera-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.camera-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.camera-btn-cancel {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.camera-btn-cancel:hover:not(:disabled) {
+  background: #d0d0d0;
+}
+
+.camera-btn-capture {
+  background: #667eea;
+  color: white;
+}
+
+.camera-btn-capture:hover:not(:disabled) {
+  background: #5568d3;
+}
+
+.camera-btn-secondary {
+  background: #667eea;
+  color: white;
+  margin-top: 1rem;
+}
+
+.camera-btn-secondary:hover {
+  background: #5568d3;
+}
+
+.camera-error {
+  padding: 2rem;
+  text-align: center;
+  color: #333;
+}
+
+.camera-error p {
+  margin-bottom: 0.5rem;
+}
+
+.camera-error-hint {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}

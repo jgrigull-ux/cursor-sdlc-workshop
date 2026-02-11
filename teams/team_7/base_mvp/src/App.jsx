@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import HatGallery from './components/HatGallery';
 import HatControls from './components/HatControls';
+import CameraCapture from './components/CameraCapture';
 import { hats } from './data/hats';
 import './App.css';
 
@@ -9,6 +10,7 @@ function App() {
   const [uploadedPhoto, setUploadedPhoto] = useState(null);
   const [hatPosition, setHatPosition] = useState({ top: 10, left: 50 });
   const [hatSize, setHatSize] = useState(30);
+  const [showCamera, setShowCamera] = useState(false);
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -19,6 +21,11 @@ function App() {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleCameraCapture = (dataUrl) => {
+    setUploadedPhoto(dataUrl);
+    setShowCamera(false);
   };
 
   const handleHatSelect = (hatId) => {
@@ -46,7 +53,22 @@ function App() {
             onChange={handlePhotoUpload}
             className="upload-input"
           />
+          <button
+            type="button"
+            className="upload-label upload-label-button"
+            onClick={() => setShowCamera(true)}
+            aria-label="Take a photo with your camera"
+          >
+            Take Photo
+          </button>
         </div>
+
+        {showCamera && (
+          <CameraCapture
+            onCapture={handleCameraCapture}
+            onCancel={() => setShowCamera(false)}
+          />
+        )}
 
         <div className="preview-section">
           {uploadedPhoto ? (

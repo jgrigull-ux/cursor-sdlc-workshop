@@ -42,6 +42,11 @@
 .upload-section {
   margin-bottom: 2rem;
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .upload-label {
@@ -59,6 +64,15 @@
   background: #5568d3;
 }
 
+.upload-label-button {
+  border: none;
+  font: inherit;
+}
+
+.upload-label-button:hover {
+  background: #5568d3;
+}
+
 .upload-input {
   display: none;
 }
@@ -71,10 +85,12 @@
   align-items: center;
 }
 
+/* Extra space above photo so the hat can be moved up for more precise placement */
 .photo-container {
   position: relative;
   max-width: 100%;
   display: inline-block;
+  padding-top: 18%;
 }
 
 .uploaded-photo {

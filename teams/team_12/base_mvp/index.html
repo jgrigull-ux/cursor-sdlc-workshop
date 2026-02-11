@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MotoFrogger</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+    }
+    canvas {
+      border: 3px solid #e94560;
+      border-radius: 4px;
+      image-rendering: pixelated;
+    }
+    #container {
+      text-align: center;
+    }
+    h1 {
+      color: #e94560;
+      font-size: 28px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+    }
+    #instructions {
+      color: #aaa;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>MotoFrogger</h1>
+    <canvas id="game" width="600" height="660"></canvas>
+    <div id="instructions">Arrow keys to move &bull; Reach the top to advance</div>
+  </div>
+
+  <script>
+    // ─── CONFIG ───────────────────────────────────────────
+    const COLS = 10;
+    const ROWS = 11;
+    const CELL = 60; // px per cell
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+
+    // ─── COLORS ───────────────────────────────────────────
+    const COLORS = {
+      road: '#2d2d44',
+      lane_line: '#555577',
+      safe_zone: '#16213e',
+      safe_stripe: '#1a2744',
+      finish: '#0f3460',
+      finish_flag: '#e94560',
+      moto_body: '#e94560',
+      moto_wheel: '#222',
+      moto_light: '#ffdd57',
+    };
+
+    // ─── GAME STATE ──────────────────────────────────────
+    const game = {
+      moto: { col: 4, row: ROWS - 1 },
+      lanes: [],
+      animFrame: null,
+      lastMove: 0,
+    };
+
+    // ─── LANE SETUP ──────────────────────────────────────
+    // Row 0 = finish, Row 10 = start (safe), Rows 1-9 = traffic or safe
+    // Layout: finish | 4 traffic | safe | 4 traffic | start
+    function initLanes() {
+      game.lanes = [];
+      for (let r = 0; r < ROWS; r++) {
+        if (r === 0) {
+          game.lanes.push({ type: 'finish' });
+        } else if (r === ROWS - 1) {
+          game.lanes.push({ type: 'safe' });
+        } else if (r === 5) {
+          game.lanes.push({ type: 'safe' }); // mid safe zone
+        } else {
+          // Traffic lane
+          const speed = (0.5 + Math.random() * 1.5) * (r % 2 === 0 ? 1 : -1);
+          const vehicleCount = 2 + Math.floor(Math.random() * 2);
+          const vehicles = [];
+          for (let v = 0; v < vehicleCount; v++) {
+            const width = 1.2 + Math.random() * 1.0; // in cells
+            vehicles.push({
+              x: v * (COLS / vehicleCount) + Math.random() * 1.5,
+              width: width,
+              color: randomVehicleColor(),
+            });
+          }
+          game.lanes.push({ type: 'traffic', speed, vehicles });
+        }
+      }
+    }
+
+    function randomVehicleColor() {
+      const palette = ['#e94560', '#f5a623', '#4fc3f7', '#81c784', '#ba68c8', '#ff8a65'];
+      return palette[Math.floor(Math.random() * palette.length)];
+    }
+
+    // ─── INPUT ────────────────────────────────────────────
+    const keys = {};
+    window.addEventListener('keydown', e => {
+      if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+        keys[e.key] = true;
+      }
+    });
+    window.addEventListener('keyup', e => { keys[e.key] = false; });
+
+    function handleInput() {
+      const now = performance.now();
+      if (now - game.lastMove < 120) return; // throttle movement
+
+      let moved = false;
+      if (keys['ArrowUp']    && game.moto.row > 0)        { game.moto.row--; moved = true; }
+      else if (keys['ArrowDown']  && game.moto.row < ROWS - 1) { game.moto.row++; moved = true; }
+      else if (keys['ArrowLeft']  && game.moto.col > 0)        { game.moto.col--; moved = true; }
+      else if (keys['ArrowRight'] && game.moto.col < COLS - 1) { game.moto.col++; moved = true; }
+
+      if (moved) game.lastMove = now;
+    }
+
+    // ─── UPDATE ───────────────────────────────────────────
+    function update(dt) {
+      handleInput();
+
+      // Move vehicles
+      for (const lane of game.lanes) {
+        if (lane.type !== 'traffic') continue;
+        for (const v of lane.vehicles) {
+          v.x += lane.speed * dt;
+          // Wrap around
+          if (lane.speed > 0 && v.x > COLS + 1) v.x = -v.width - 0.5;
+          if (lane.speed < 0 && v.x + v.width < -1) v.x = COLS + 0.5;
+        }
+      }
+
+      // Collision detection
+      const lane = game.lanes[game.moto.row];
+      if (lane.type === 'traffic') {
+        const motoLeft = game.moto.col + 0.15;
+        const motoRight = game.moto.col + 0.85;
+        for (const v of lane.vehicles) {
+          if (motoRight > v.x && motoLeft < v.x + v.width) {
+            // Hit! Reset to start
+            game.moto.col = 4;
+            game.moto.row = ROWS - 1;
+            return;
+          }
+        }
+      }
+
+      // Reached finish
+      if (game.moto.row === 0) {
+        game.moto.col = 4;
+        game.moto.row = ROWS - 1;
+        initLanes(); // new traffic pattern each level
+      }
+    }
+
+    // ─── DRAW ─────────────────────────────────────────────
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw lanes (background)
+      for (let r = 0; r < ROWS; r++) {
+        const lane = game.lanes[r];
+        const y = r * CELL;
+
+        if (lane.type === 'finish') {
+          ctx.fillStyle = COLORS.finish;
+          ctx.fillRect(0, y, canvas.width, CELL);
+          // Checkered flag pattern
+          for (let c = 0; c < COLS; c++) {
+            if ((c) % 2 === 0) {
+              ctx.fillStyle = COLORS.finish_flag;
+              ctx.fillRect(c * CELL, y, CELL / 2, CELL / 2);
+              ctx.fillRect(c * CELL + CELL / 2, y + CELL / 2, CELL / 2, CELL / 2);
+            }
+          }
+        } else if (lane.type === 'safe') {
+          ctx.fillStyle = COLORS.safe_zone;
+          ctx.fillRect(0, y, canvas.width, CELL);
+          // Subtle stripe
+          ctx.fillStyle = COLORS.safe_stripe;
+          for (let c = 0; c < COLS; c += 2) {
+            ctx.fillRect(c * CELL, y, CELL, CELL);
+          }
+        } else {
+          // Road
+          ctx.fillStyle = COLORS.road;
+          ctx.fillRect(0, y, canvas.width, CELL);
+          // Dashed lane lines
+          ctx.strokeStyle = COLORS.lane_line;
+          ctx.lineWidth = 1;
+          ctx.setLineDash([12, 8]);
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      }
+
+      // Draw vehicles
+      for (let r = 0; r < ROWS; r++) {
+        const lane = game.lanes[r];
+        if (lane.type !== 'traffic') continue;
+        const y = r * CELL;
+
+        for (const v of lane.vehicles) {
+          const vx = v.x * CELL;
+          const vw = v.width * CELL;
+          const vh = CELL * 0.6;
+          const vy = y + (CELL - vh) / 2;
+
+          // Vehicle body
+          ctx.fillStyle = v.color;
+          ctx.beginPath();
+          ctx.roundRect(vx, vy, vw, vh, 6);
+          ctx.fill();
+
+          // Windshield
+          ctx.fillStyle = 'rgba(255,255,255,0.2)';
+          const wsX = lane.speed > 0 ? vx + vw - 14 : vx + 4;
+          ctx.fillRect(wsX, vy + 4, 10, vh - 8);
+
+          // Wheels
+          ctx.fillStyle = '#111';
+          ctx.fillRect(vx + 6, vy - 3, 10, 4);
+          ctx.fillRect(vx + 6, vy + vh - 1, 10, 4);
+          ctx.fillRect(vx + vw - 16, vy - 3, 10, 4);
+          ctx.fillRect(vx + vw - 16, vy + vh - 1, 10, 4);
+        }
+      }
+
+      // Draw motorcycle
+      drawMotorcycle(game.moto.col * CELL, game.moto.row * CELL);
+    }
+
+    function drawMotorcycle(x, y) {
+      const cx = x + CELL / 2;
+      const cy = y + CELL / 2;
+
+      // Wheels
+      ctx.fillStyle = COLORS.moto_wheel;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - 14, 8, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + 14, 8, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Wheel rims
+      ctx.strokeStyle = '#555';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - 14, 4, 4, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + 14, 4, 4, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Body / frame
+      ctx.fillStyle = COLORS.moto_body;
+      ctx.beginPath();
+      ctx.roundRect(cx - 7, cy - 10, 14, 20, 4);
+      ctx.fill();
+
+      // Engine block
+      ctx.fillStyle = '#b83050';
+      ctx.fillRect(cx - 10, cy - 3, 20, 6);
+
+      // Headlight
+      ctx.fillStyle = COLORS.moto_light;
+      ctx.beginPath();
+      ctx.arc(cx, cy - 18, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Headlight glow
+      ctx.fillStyle = 'rgba(255, 221, 87, 0.15)';
+      ctx.beginPath();
+      ctx.arc(cx, cy - 18, 8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Handlebars
+      ctx.strokeStyle = '#ccc';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx - 12, cy - 8);
+      ctx.lineTo(cx + 12, cy - 8);
+      ctx.stroke();
+    }
+
+    // ─── GAME LOOP ────────────────────────────────────────
+    let lastTime = 0;
+    function gameLoop(timestamp) {
+      const dt = Math.min((timestamp - lastTime) / 1000, 0.05);
+      lastTime = timestamp;
+
+      update(dt);
+      draw();
+      game.animFrame = requestAnimationFrame(gameLoop);
+    }
+
+    // ─── START ────────────────────────────────────────────
+    initLanes();
+    game.animFrame = requestAnimationFrame(gameLoop);
+  </script>
+</body>
+</html>

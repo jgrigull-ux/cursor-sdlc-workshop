@@ -17,6 +17,7 @@
 ## Guidelines
 
 ### Keep It Small!
+
 - Your MVP should be buildable in **10 minutes** by one person
 - Think "proof of concept" not "production ready"
 - **Frontend only** — no server, no database, no auth, no external APIs

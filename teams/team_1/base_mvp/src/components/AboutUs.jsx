@@ -88,8 +88,20 @@ function AboutUs({ onBack }) {
         </div>
       </div>
 
+      <div className="about-card">
+        <h2 className="about-section-title">Meet Our Pro Stylists</h2>
+        <div className="stylists-list">
+          <div className="stylist-item">Zoe Barnswell</div>
+          <div className="stylist-item">Will Ziesing</div>
+          <div className="stylist-item">Faisal Shaikh</div>
+          <div className="stylist-item">Ryan Aznar</div>
+          <div className="stylist-item">Noah Zender</div>
+          <div className="stylist-item">Audrey Leung</div>
+        </div>
+      </div>
+
       <footer className="about-footer">
-        <p>Made with ❤️ by the Wardrobe Generator Team</p>
+        <p>Made with ❤️ by our Pro Stylists</p>
       </footer>
     </div>
   );

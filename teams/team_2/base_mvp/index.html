@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 700px;
             margin: 50px auto;
             padding: 20px;
             background-color: #f5f5f5;
@@ -31,17 +31,51 @@
         
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: bold;
             color: #555;
+            font-size: 18px;
         }
         
-        select {
-            width: 100%;
-            padding: 10px;
+        /* City Grid Styles */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .city-button {
+            padding: 15px 20px;
             font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            font-weight: 500;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .city-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-color: #4a90e2;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+        }
+        
+        .city-button.active {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            border-color: #357abd;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .city-button:active {
+            transform: translateY(0px);
         }
         
         .weather-display {
@@ -107,19 +141,19 @@
         <h1>CityWeather Toggle</h1>
         
         <div class="city-selector">
-            <label for="citySelect">Select a City:</label>
-            <select id="citySelect" onchange="updateWeather()">
-                <option value="new-york">New York</option>
-                <option value="los-angeles">Los Angeles</option>
-                <option value="chicago">Chicago</option>
-                <option value="houston">Houston</option>
-                <option value="phoenix">Phoenix</option>
-                <option value="philadelphia">Philadelphia</option>
-                <option value="san-antonio">San Antonio</option>
-                <option value="san-diego">San Diego</option>
-                <option value="dallas">Dallas</option>
-                <option value="austin">Austin</option>
-            </select>
+            <label>Select a City:</label>
+            <div class="city-grid" id="cityGrid">
+                <button class="city-button active" data-city="new-york" onclick="selectCity('new-york')">New York</button>
+                <button class="city-button" data-city="los-angeles" onclick="selectCity('los-angeles')">Los Angeles</button>
+                <button class="city-button" data-city="chicago" onclick="selectCity('chicago')">Chicago</button>
+                <button class="city-button" data-city="houston" onclick="selectCity('houston')">Houston</button>
+                <button class="city-button" data-city="phoenix" onclick="selectCity('phoenix')">Phoenix</button>
+                <button class="city-button" data-city="philadelphia" onclick="selectCity('philadelphia')">Philadelphia</button>
+                <button class="city-button" data-city="san-antonio" onclick="selectCity('san-antonio')">San Antonio</button>
+                <button class="city-button" data-city="san-diego" onclick="selectCity('san-diego')">San Diego</button>
+                <button class="city-button" data-city="dallas" onclick="selectCity('dallas')">Dallas</button>
+                <button class="city-button" data-city="austin" onclick="selectCity('austin')">Austin</button>
+            </div>
         </div>
         
         <div class="weather-display" id="weatherDisplay">
@@ -238,12 +272,30 @@
             return surferSpeak[condition] || 'Chill vibes. Could go either way.';
         }
 
-        // Function to update weather display when city changes
-        function updateWeather() {
-            const citySelect = document.getElementById('citySelect');
-            const selectedCity = citySelect.value;
-            const weather = weatherData[selectedCity];
+        // Current selected city
+        let currentCity = 'new-york';
 
+        // Function to select a city and update the display
+        function selectCity(cityId) {
+            currentCity = cityId;
+            
+            // Update active state on buttons
+            const buttons = document.querySelectorAll('.city-button');
+            buttons.forEach(button => {
+                if (button.getAttribute('data-city') === cityId) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+            
+            // Update weather display
+            updateWeather(cityId);
+        }
+
+        // Function to update weather display
+        function updateWeather(cityId) {
+            const weather = weatherData[cityId];
             document.getElementById('cityName').textContent = weather.name;
             document.getElementById('temperature').textContent = weather.temperature + '°F';
             document.getElementById('condition').textContent = getSurferSpeak(weather.condition);
@@ -255,7 +307,7 @@
 
         // Initialize with first city on page load
         window.onload = function() {
-            updateWeather();
+            updateWeather('new-york');
         };
     </script>
 </body>
